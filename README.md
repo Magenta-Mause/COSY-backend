@@ -30,7 +30,7 @@ cd infrastructure
 docker compose up -d
 ```
 
-### **2\. Configuration**
+### **2. Configuration**
 
 Ensure your application.properties or application.yaml is configured to connect to the services started in step 1\.
 
