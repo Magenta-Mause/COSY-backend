@@ -1,4 +1,4 @@
-# **🏡 Cosy \- Backend**
+# **🏡 Cosy - Backend**
 
 The core orchestration engine for **Cosy** (Cost Optimised Server Yard).  
 This Spring Boot application acts as the "Town Hall" of the Cosy ecosystem. It manages game server containers, handles
