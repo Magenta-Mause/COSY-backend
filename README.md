@@ -34,7 +34,7 @@ docker compose up -d
 
 Ensure your application.properties or application.yaml is configured to connect to the services started in step 1\.
 
-### **3\. Build & Run**
+### **3. Build & Run**
 
 You can start the application using the Maven wrapper:
 
