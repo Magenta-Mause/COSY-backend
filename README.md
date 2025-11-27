@@ -20,7 +20,7 @@ file I/O operations directly on the host, and coordinates with specialized data 
 
 ## **🚀 Getting Started**
 
-### **1\. Start Infrastructure**
+### **1. Start Infrastructure**
 
 Before running the backend, you need the "Data Silos" (Postgres, Influx, etc.) running. We provide a docker-compose file
 for development.
