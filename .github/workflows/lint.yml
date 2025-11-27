@@ -6,7 +6,6 @@ on:
     branches: [ "*" ]
   pull_request:
     branches: [ "main" ]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -24,21 +23,15 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: 'maven' # Caches dependencies to speed up future runs
+          cache: 'maven' # Caches ~/.m2 to speed up future runs
 
       # 3. Check Code Formatting (Spotless)
-      # This step will FAIL if the code is not formatted correctly.
-      # It ensures no "ugly" code gets merged.
+      # ADDED: -B (Batch Mode) prevents the "Progress (1): ..." log spam
       - name: Check Formatting (Spotless)
-        run: mvn spotless:check
+        run: mvn -B spotless:check
 
-      # 4. (Optional) Run Static Analysis (Checkstyle)
-      # Uncomment the line below if you added the maven-checkstyle-plugin
-      # - name: Run Checkstyle
-      #   run: mvn checkstyle:check
-
-      # 5. Build and Test
-      # This ensures the code actually compiles and unit tests pass.
-      # 'verify' typically runs integration tests and other checks too.
+      # 4. Build and Test
+      # ADDED: -B (Batch Mode)
+      # REMOVED: -DskipTests=false (verify runs tests by default anyway)
       - name: Build and Verify
-        run: mvn verify -DskipTests=false
+        run: mvn -B verify
