@@ -10,6 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 @Embeddable
 public class PortMapping {
-    public int instancePort;
-    public int containerPort;
+    private int instancePort;
+    private int containerPort;
 }

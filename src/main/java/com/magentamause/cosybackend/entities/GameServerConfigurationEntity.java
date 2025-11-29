@@ -22,7 +22,9 @@ public class GameServerConfigurationEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
 
+    @Column(nullable = false)
     private String serverName;
+    @Column(nullable = false)
     private String ownerId;
 
     private GameServerStatus status;
@@ -30,6 +32,7 @@ public class GameServerConfigurationEntity {
 
     private String gameUuid;
 
+    @Column(nullable = false)
     private String dockerImageName;
     private String dockerImageTag;
 

@@ -25,7 +25,7 @@ public class GameServerConfigurationDummyService {
     private final GameServerConfigurationService gameServerConfigurationService;
     private final DummyInstantiatedPropertiesRepository dummyInstantiatedPropertiesRepository;
 
-    private List<GameServerConfigurationEntity> dummyGameServers =
+    private final List<GameServerConfigurationEntity> dummyGameServers =
             List.of(
                     GameServerConfigurationEntity.builder()
                             .uuid(UUID.randomUUID().toString())
