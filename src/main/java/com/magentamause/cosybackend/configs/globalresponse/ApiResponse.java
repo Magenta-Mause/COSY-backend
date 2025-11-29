@@ -13,6 +13,7 @@ public class ApiResponse<T> {
     private boolean success;
     private T data;
     private String error;
+    private String path;
     @Builder.Default private Instant timestamp = Instant.now();
     private int statusCode;
 }

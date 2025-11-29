@@ -1,5 +1,6 @@
 package com.magentamause.cosybackend.configs.globalresponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ApiResponse<?>> handleResponseStatusException(
-            ResponseStatusException ex) {
+            ResponseStatusException ex, HttpServletRequest request) {
         log.warn("Response status exception occurred", ex);
         return ResponseEntity.status(ex.getStatusCode())
                 .body(
@@ -22,6 +23,7 @@ public class GlobalExceptionHandler {
                                 .success(false)
                                 .data(ex.getReason())
                                 .error(ex.getMessage())
+                                .path(request.getRequestURI())
                                 .statusCode(ex.getStatusCode().value())
                                 .build());
     }
@@ -38,18 +40,27 @@ public class GlobalExceptionHandler {
                                         "404 No Resource found under \""
                                                 + ex.getResourcePath()
                                                 + '"')
+                                .path(ex.getResourcePath())
                                 .statusCode(HttpStatus.NOT_FOUND.value())
                                 .build());
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<?>> handle(Exception ex) {
+    public ResponseEntity<ApiResponse<?>> handle(Exception ex, HttpServletRequest request)
+            throws Exception {
+        String path = request.getRequestURI();
         log.warn("Unexpected error occurred", ex);
+
+        if (path.startsWith("/api/v3/api-docs") || path.startsWith("/api/swagger-ui")) {
+            throw ex;
+        }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(
                         ApiResponse.builder()
                                 .success(false)
                                 .data("An unexpected error occurred.")
+                                .path(path)
                                 .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                                 .build());
     }
