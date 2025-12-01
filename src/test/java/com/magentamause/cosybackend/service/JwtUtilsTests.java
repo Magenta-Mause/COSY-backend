@@ -7,13 +7,10 @@ import com.magentamause.cosybackend.security.JwtUtils;
 import com.magentamause.cosybackend.security.config.JwtProperties;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.util.Map;
+import javax.crypto.SecretKey;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.crypto.SecretKey;
 
 public class JwtUtilsTests {
 
@@ -28,15 +25,11 @@ public class JwtUtilsTests {
     @BeforeEach
     void setUp() {
         username = "testuser";
-        claims = Map.of(
-                "username", username,
-                "tokenType", JwtTokenBody.TokenType.IDENTITY_TOKEN);
+        claims = Map.of("username", username, "tokenType", JwtTokenBody.TokenType.IDENTITY_TOKEN);
 
         signingKey = Jwts.SIG.HS256.key().build();
 
-        jwtParser = Jwts.parser()
-                .verifyWith(signingKey)
-                .build();
+        jwtParser = Jwts.parser().verifyWith(signingKey).build();
 
         jwtProperties = new JwtProperties("secret", 60000, 3600000);
 
@@ -51,14 +44,13 @@ public class JwtUtilsTests {
         Map<String, Object> parsedClaims =
                 jwtUtils.getTokenContentBody(token, JwtTokenBody.TokenType.IDENTITY_TOKEN);
         assertEquals(username, parsedClaims.get("username"));
-        assertEquals(JwtTokenBody.TokenType.IDENTITY_TOKEN.toString(), parsedClaims.get("tokenType"));
+        assertEquals(
+                JwtTokenBody.TokenType.IDENTITY_TOKEN.toString(), parsedClaims.get("tokenType"));
     }
 
     @Test
     void generateRefreshToken_shouldReturnValidToken() {
-        claims = Map.of(
-                "username", username,
-                "tokenType", JwtTokenBody.TokenType.REFRESH_TOKEN);
+        claims = Map.of("username", username, "tokenType", JwtTokenBody.TokenType.REFRESH_TOKEN);
 
         String token = jwtUtils.generateRefreshToken(claims, username);
         assertNotNull(token);
@@ -66,17 +58,20 @@ public class JwtUtilsTests {
         Map<String, Object> parsedClaims =
                 jwtUtils.getTokenContentBody(token, JwtTokenBody.TokenType.REFRESH_TOKEN);
         assertEquals(username, parsedClaims.get("username"));
-        assertEquals(JwtTokenBody.TokenType.REFRESH_TOKEN.toString(), parsedClaims.get("tokenType"));
+        assertEquals(
+                JwtTokenBody.TokenType.REFRESH_TOKEN.toString(), parsedClaims.get("tokenType"));
     }
 
     @Test
     void getTokenContentBody_withWrongTokenType_shouldThrowException() {
         String token = jwtUtils.generateIdentityToken(claims, username);
 
-        SecurityException exception = assertThrows(
-                SecurityException.class,
-                () -> jwtUtils.getTokenContentBody(token, JwtTokenBody.TokenType.REFRESH_TOKEN)
-        );
+        SecurityException exception =
+                assertThrows(
+                        SecurityException.class,
+                        () ->
+                                jwtUtils.getTokenContentBody(
+                                        token, JwtTokenBody.TokenType.REFRESH_TOKEN));
 
         assertTrue(exception.getMessage().contains("Token type mismatch"));
     }
@@ -85,10 +80,12 @@ public class JwtUtilsTests {
     void getTokenContentBody_withInvalidToken_shouldThrowException() {
         String invalidToken = "this.is.not.a.valid.jwt";
 
-        SecurityException exception = assertThrows(
-                SecurityException.class,
-                () -> jwtUtils.getTokenContentBody(invalidToken, JwtTokenBody.TokenType.IDENTITY_TOKEN)
-        );
+        SecurityException exception =
+                assertThrows(
+                        SecurityException.class,
+                        () ->
+                                jwtUtils.getTokenContentBody(
+                                        invalidToken, JwtTokenBody.TokenType.IDENTITY_TOKEN));
 
         assertTrue(exception.getMessage().contains("Invalid token format"));
     }
@@ -102,10 +99,12 @@ public class JwtUtilsTests {
 
         Thread.sleep(5);
 
-        SecurityException exception = assertThrows(
-                SecurityException.class,
-                () -> shortLivedJwtUtils.getTokenContentBody(token, JwtTokenBody.TokenType.IDENTITY_TOKEN)
-        );
+        SecurityException exception =
+                assertThrows(
+                        SecurityException.class,
+                        () ->
+                                shortLivedJwtUtils.getTokenContentBody(
+                                        token, JwtTokenBody.TokenType.IDENTITY_TOKEN));
 
         assertTrue(exception.getMessage().contains("Token expired"));
     }
