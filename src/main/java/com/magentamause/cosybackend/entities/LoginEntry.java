@@ -16,6 +16,7 @@ public class LoginEntry {
 
     @Column private String password;
 
-    @OneToOne(mappedBy = "loginEntry", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_uuid", referencedColumnName = "uuid")
     private UserEntity user;
 }

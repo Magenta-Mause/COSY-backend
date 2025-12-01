@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class JwtTokenBody {
-    private String email;
+    private String username;
     private TokenType tokenType;
     private Collection<UserEntity> authorizedUsers;
 
