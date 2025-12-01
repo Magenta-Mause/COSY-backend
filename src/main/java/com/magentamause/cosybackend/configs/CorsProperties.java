@@ -3,7 +3,6 @@ package com.magentamause.cosybackend.configs;
 import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-
 @ConfigurationProperties(prefix = "cosy.cors")
 public class CorsProperties {
 
