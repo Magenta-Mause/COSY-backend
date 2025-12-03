@@ -1,10 +1,8 @@
 package com.magentamause.cosybackend.services;
 
-import com.magentamause.cosybackend.DTOs.UserEntityDTO;
 import com.magentamause.cosybackend.entities.UserEntity;
 import com.magentamause.cosybackend.repositories.UserEntityRepository;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,22 +16,19 @@ public class UserEntityService {
 
     private final UserEntityRepository userEntityRepository;
 
-    public List<UserEntityDTO> getAllUsers() {
-        List<UserEntity> users = userEntityRepository.findAll();
+    public List<UserEntity> getAllUsers() {
 
-        return users.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return userEntityRepository.findAll();
     }
 
-    public UserEntityDTO getUserByUuid(String uuid) {
-        UserEntity user =
-                userEntityRepository
-                        .findById(uuid)
-                        .orElseThrow(
-                                () ->
-                                        new ResponseStatusException(
-                                                HttpStatus.NOT_FOUND,
-                                                "User with uuid " + uuid + " not found"));
-        return convertToDTO(user);
+    public UserEntity getUserByUuid(String uuid) {
+        return userEntityRepository
+                .findById(uuid)
+                .orElseThrow(
+                        () ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND,
+                                        "User with uuid " + uuid + " not found"));
     }
 
     public void saveUserEntity(UserEntity userEntity) {
@@ -50,9 +45,5 @@ public class UserEntityService {
                                                 HttpStatus.NOT_FOUND,
                                                 "User with uuid " + uuid + " not found"));
         userEntityRepository.delete(user);
-    }
-
-    private UserEntityDTO convertToDTO(UserEntity user) {
-        return UserEntityDTO.builder().username(user.getUsername()).role(user.getRole()).build();
     }
 }
