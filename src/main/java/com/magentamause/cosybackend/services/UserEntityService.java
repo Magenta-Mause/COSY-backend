@@ -32,6 +32,16 @@ public class UserEntityService {
                                         "User with uuid " + uuid + " not found"));
     }
 
+    public UserEntity getUserByUsername(String username) {
+        return userEntityRepository
+                .findByUsername(username)
+                .orElseThrow(
+                        () ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND,
+                                        "User with username " + username + " not found"));
+    }
+
     public void saveUserEntity(UserEntity userEntity) {
         userEntityRepository.save(userEntity);
     }

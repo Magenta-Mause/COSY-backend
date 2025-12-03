@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
@@ -42,6 +44,36 @@ public class GlobalExceptionHandler {
                                                 + '"')
                                 .path(ex.getResourcePath())
                                 .statusCode(HttpStatus.NOT_FOUND.value())
+                                .build());
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ApiResponse<?>> handleMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(
+                        ApiResponse.builder()
+                                .success(false)
+                                .data("HTTP method not supported")
+                                .error(ex.getMessage())
+                                .path(path)
+                                .statusCode(HttpStatus.METHOD_NOT_ALLOWED.value())
+                                .build());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponse<?>> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex, HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ApiResponse.builder()
+                                .success(false)
+                                .data("Malformed JSON request")
+                                .error("This endpoint expects a different request body.")
+                                .path(path)
+                                .statusCode(HttpStatus.BAD_REQUEST.value())
                                 .build());
     }
 

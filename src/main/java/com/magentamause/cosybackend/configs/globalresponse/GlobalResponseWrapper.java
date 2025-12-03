@@ -1,10 +1,13 @@
 package com.magentamause.cosybackend.configs.globalresponse;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpResponse;
@@ -14,6 +17,12 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 @RestControllerAdvice
 public class GlobalResponseWrapper implements ResponseBodyAdvice<Object> {
+
+    private final ObjectMapper objectMapper;
+
+    public GlobalResponseWrapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public boolean supports(
@@ -52,6 +61,26 @@ public class GlobalResponseWrapper implements ResponseBodyAdvice<Object> {
         if (response instanceof ServletServerHttpResponse servletResponse) {
             int statusCode = servletResponse.getServletResponse().getStatus();
             status = HttpStatus.valueOf(statusCode);
+        }
+
+        if (selectedConverterType == StringHttpMessageConverter.class) {
+            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        }
+
+        if (body instanceof String) {
+            ApiResponse<?> wrapped =
+                    ApiResponse.builder()
+                            .data(body)
+                            .success(true)
+                            .statusCode(status.value())
+                            .path(path)
+                            .build();
+
+            try {
+                return objectMapper.writeValueAsString(wrapped);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // Handle empty responses (void methods)
