@@ -1,6 +1,5 @@
 package com.magentamause.cosybackend.entities;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 

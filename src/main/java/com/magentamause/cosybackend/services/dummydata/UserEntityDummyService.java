@@ -27,7 +27,7 @@ public class UserEntityDummyService {
 
         UserEntity adminUser = UserEntity.builder()
                 .username("admin")
-                .password("admin")
+                .password()
                 .defaultPasswordReset(false)
                 .role(UserEntity.Role.OWNER)
                 .build();
