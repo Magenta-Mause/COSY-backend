@@ -20,23 +20,19 @@ public class UserEntityController {
     public ResponseEntity<List<UserEntityDTO>> getAllUserEntities() {
         List<UserEntity> users = userEntityService.getAllUsers();
         List<UserEntityDTO> userDTOs =
-                users.stream().map(this::convertToDTO).collect(Collectors.toList());
+                users.stream().map(userEntityService::convertToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(userDTOs);
     }
 
     @GetMapping("/{uuid}")
     public ResponseEntity<UserEntityDTO> getUserEntity(@PathVariable String uuid) {
         UserEntity user = userEntityService.getUserByUuid(uuid);
-        return ResponseEntity.ok(convertToDTO(user));
+        return ResponseEntity.ok(userEntityService.convertToDTO(user));
     }
 
     @DeleteMapping("/{uuid}")
     public ResponseEntity<Void> deleteUserEntity(@PathVariable String uuid) {
         userEntityService.deleteUserByUuid(uuid);
         return ResponseEntity.noContent().build();
-    }
-
-    private UserEntityDTO convertToDTO(UserEntity user) {
-        return UserEntityDTO.builder().username(user.getUsername()).role(user.getRole()).build();
     }
 }

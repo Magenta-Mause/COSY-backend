@@ -1,5 +1,6 @@
 package com.magentamause.cosybackend.services;
 
+import com.magentamause.cosybackend.DTOs.UserEntityDTO;
 import com.magentamause.cosybackend.entities.UserEntity;
 import com.magentamause.cosybackend.repositories.UserEntityRepository;
 import java.util.List;
@@ -45,5 +46,9 @@ public class UserEntityService {
                                                 HttpStatus.NOT_FOUND,
                                                 "User with uuid " + uuid + " not found"));
         userEntityRepository.delete(user);
+    }
+
+    public UserEntityDTO convertToDTO(UserEntity user) {
+        return UserEntityDTO.builder().username(user.getUsername()).role(user.getRole()).build();
     }
 }
