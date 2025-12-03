@@ -26,13 +26,13 @@ public class JwtUtils {
     }
 
     public String generateIdentityToken(Map<String, Object> claims, String username) {
-        Map<String, Object> map = new HashMap(claims);
+        Map<String, Object> map = new HashMap<>(claims);
         map.put("tokenType", JwtTokenBody.TokenType.IDENTITY_TOKEN);
         return createToken(map, username, jwtProperties.identityTokenExpirationTime());
     }
 
     public String generateRefreshToken(Map<String, Object> claims, String username) {
-        Map<String, Object> map = new HashMap(claims);
+        Map<String, Object> map = new HashMap<>(claims);
         map.put("tokenType", JwtTokenBody.TokenType.REFRESH_TOKEN);
         return createToken(map, username, jwtProperties.refreshTokenExpirationTime());
     }

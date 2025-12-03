@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
                         ApiResponse.builder()
                                 .success(false)
                                 .data("HTTP method not supported")
-                                .error(ex.getMessage())
+                                .error("HTTP method not supported for this endpoint.")
                                 .path(path)
                                 .statusCode(HttpStatus.METHOD_NOT_ALLOWED.value())
                                 .build());
@@ -118,7 +118,7 @@ public class GlobalExceptionHandler {
                                 .path(request.getRequestURI())
                                 .statusCode(HttpStatus.BAD_REQUEST.value())
                                 .success(false)
-                                .data("Cookie: " + ex.getCookieName() + " is missing")
+                                .data("Required cookie is missing")
                                 .error("Required cookie is missing.")
                                 .build());
     }
