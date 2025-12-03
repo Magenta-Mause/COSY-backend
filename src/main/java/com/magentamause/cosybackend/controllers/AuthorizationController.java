@@ -40,7 +40,7 @@ public class AuthorizationController {
                         .build();
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                .body("Success");
+                .build();
     }
 
     @GetMapping("/token")
