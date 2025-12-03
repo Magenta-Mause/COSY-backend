@@ -53,9 +53,6 @@ public class UserEntityService {
     }
 
     private UserEntityDTO convertToDTO(UserEntity user) {
-        return UserEntityDTO.builder()
-                .username(user.getUsername())
-                .role(user.getRole())
-                .build();
+        return UserEntityDTO.builder().username(user.getUsername()).role(user.getRole()).build();
     }
 }
