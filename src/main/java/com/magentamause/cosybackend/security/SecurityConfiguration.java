@@ -31,8 +31,11 @@ public class SecurityConfiguration {
                                 authorizeRequests
                                         .requestMatchers(
                                                 "/auth/**",
-                                                "/user-invites/use/**", // Allow unauthenticated invite usage
-                                                "/user-invites/{secretKey}", // Allow unauthenticated invite validation
+                                                "/user-invites/use/**", // Allow unauthenticated
+                                                // invite usage
+                                                "/user-invites/{secretKey}", // Allow
+                                                // unauthenticated
+                                                // invite validation
                                                 "/v3/api-docs/**",
                                                 "/actuator/**",
                                                 "/swagger-ui/**")
