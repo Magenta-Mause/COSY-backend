@@ -3,6 +3,8 @@ package com.magentamause.cosybackend.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -26,6 +28,9 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "invitedBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserInviteEntity> invites;
 
     public enum Role {
         OWNER,

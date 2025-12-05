@@ -2,9 +2,12 @@ package com.magentamause.cosybackend.entities;
 
 import com.magentamause.cosybackend.DTOs.entitydtos.UserInviteDto;
 import jakarta.persistence.*;
+import java.time.Instant;
 import lombok.*;
-import tools.jackson.databind.PropertyNamingStrategies;
-import tools.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @Setter
@@ -12,6 +15,7 @@ import tools.jackson.databind.annotation.JsonNaming;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserInviteEntity {
     @Id
@@ -23,7 +27,11 @@ public class UserInviteEntity {
     @Column(unique = true, nullable = false)
     private String secretKey;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @ManyToOne
     @JoinColumn(name = "invited_by_id")
     private UserEntity invitedBy;
 
@@ -33,6 +41,7 @@ public class UserInviteEntity {
                 .username(this.getUsername())
                 .invitedBy(this.getInvitedBy().getUuid())
                 .secretKey(this.getSecretKey())
+                .createdAt(this.getCreatedAt())
                 .build();
     }
 }
