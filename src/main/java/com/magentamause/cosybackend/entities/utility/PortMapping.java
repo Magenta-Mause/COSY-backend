@@ -1,9 +1,9 @@
 package com.magentamause.cosybackend.entities.utility;
 
-import jakarta.persistence.Embeddable;
-import lombok.*;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.persistence.Embeddable;
+import lombok.*;
 
 @Getter
 @Setter

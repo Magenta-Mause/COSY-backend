@@ -1,9 +1,8 @@
 package com.magentamause.cosybackend.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.List;
+import lombok.*;
 
 @Getter
 @Setter

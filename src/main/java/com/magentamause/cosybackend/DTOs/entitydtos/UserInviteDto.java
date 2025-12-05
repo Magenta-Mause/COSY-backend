@@ -1,10 +1,10 @@
 package com.magentamause.cosybackend.DTOs.entitydtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.time.Instant;
-import lombok.*;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import java.time.Instant;
+import lombok.*;
 
 @Getter
 @Setter

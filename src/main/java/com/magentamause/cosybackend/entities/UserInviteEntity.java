@@ -1,11 +1,11 @@
 package com.magentamause.cosybackend.entities;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magentamause.cosybackend.DTOs.entitydtos.UserInviteDto;
 import jakarta.persistence.*;
 import java.time.Instant;
 import lombok.*;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
