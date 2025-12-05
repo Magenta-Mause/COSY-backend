@@ -9,6 +9,7 @@ import com.magentamause.cosybackend.entities.UserInviteEntity;
 import com.magentamause.cosybackend.services.SecurityContextService;
 import com.magentamause.cosybackend.services.UserEntityService;
 import com.magentamause.cosybackend.services.UserInviteService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
