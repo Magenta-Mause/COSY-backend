@@ -30,7 +30,7 @@ public class SecurityContextService {
         return getAuthenticationToken().getUser();
     }
 
-    public void assertUserHasRole(UserEntity.Role role) {
+    public void assertUserHasAccessOfRole(UserEntity.Role role) {
         if (getUser().getRole().equals(UserEntity.Role.OWNER)) {
             return;
         }

@@ -28,7 +28,7 @@ public class UserInviteController {
 
     @GetMapping
     public ResponseEntity<List<UserInviteDto>> getAllUserInvites() {
-        securityContextService.assertUserHasRole(UserEntity.Role.OWNER);
+        securityContextService.assertUserHasAccessOfRole(UserEntity.Role.OWNER);
         return ResponseEntity.ok(
                 userInviteService.getAllInvites().stream()
                         .map(UserInviteEntity::convertToDto)
@@ -44,7 +44,7 @@ public class UserInviteController {
     @PostMapping
     public ResponseEntity<UserInviteDto> createInvite(
             @Valid @RequestBody UserInviteCreationDto userInviteCreationDto) {
-        securityContextService.assertUserHasRole(UserEntity.Role.OWNER);
+        securityContextService.assertUserHasAccessOfRole(UserEntity.Role.OWNER);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(
                         userInviteService
