@@ -38,8 +38,7 @@ public class UserInviteController {
     @GetMapping("/{secretKey}")
     public ResponseEntity<UserInviteDto> getUserInvite(
             @PathVariable("secretKey") String secretKey) {
-        return ResponseEntity.ok(
-                userInviteService.getInviteBySecretKey(secretKey).convertToDto());
+        return ResponseEntity.ok(userInviteService.getInviteBySecretKey(secretKey).convertToDto());
     }
 
     @PostMapping
@@ -57,8 +56,7 @@ public class UserInviteController {
 
     @PostMapping("/use/{secretKey}")
     public ResponseEntity<UserEntityDto> useInvite(
-            @PathVariable("secretKey") String secretKey,
-            @Valid @RequestBody UserCreationDto user) {
+            @PathVariable("secretKey") String secretKey, @Valid @RequestBody UserCreationDto user) {
         UserEntity createdUser =
                 userInviteService.useInvite(secretKey, user.getUsername(), user.getPassword());
         return ResponseEntity.ok(userEntityService.convertToDTO(createdUser));

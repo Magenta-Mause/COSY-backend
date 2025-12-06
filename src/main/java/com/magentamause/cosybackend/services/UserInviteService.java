@@ -66,8 +66,13 @@ public class UserInviteService {
 
     @Transactional
     public UserEntity useInvite(String secretKey, String username, String password) {
-        UserInviteEntity invite = userInviteRepository.findBySecretKeyLocked(secretKey)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invite not found"));
+        UserInviteEntity invite =
+                userInviteRepository
+                        .findBySecretKeyLocked(secretKey)
+                        .orElseThrow(
+                                () ->
+                                        new ResponseStatusException(
+                                                HttpStatus.NOT_FOUND, "Invite not found"));
         UserEntity.UserEntityBuilder userBuilder =
                 UserEntity.builder()
                         .role(UserEntity.Role.QUOTA_USER)
