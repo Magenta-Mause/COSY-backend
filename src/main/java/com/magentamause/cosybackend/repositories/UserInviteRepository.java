@@ -15,5 +15,5 @@ public interface UserInviteRepository extends JpaRepository<UserInviteEntity, St
     @Query("SELECT i FROM UserInviteEntity i WHERE i.secretKey = :secretKey")
     Optional<UserInviteEntity> findBySecretKeyLocked(@Param("secretKey") String secretKey);
 
-	boolean existsByUsername(String username);
+    boolean existsByUsername(String username);
 }

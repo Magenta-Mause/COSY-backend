@@ -66,7 +66,7 @@ public class UserEntityService {
                 .build();
     }
 
-	public boolean existsByUsername(String username) {
-		return userEntityRepository.existsByUsername(username);
-	}
+    public boolean existsByUsername(String username) {
+        return userEntityRepository.existsByUsername(username);
+    }
 }

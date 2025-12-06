@@ -17,7 +17,7 @@ public class UserInviteDto {
     private String uuid;
     private String username;
     private String invitedBy;
-		private String inviteByUsername;
+    private String inviteByUsername;
     private String secretKey;
     private Instant createdAt;
 }
