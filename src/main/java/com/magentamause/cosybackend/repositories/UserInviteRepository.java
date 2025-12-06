@@ -14,4 +14,6 @@ public interface UserInviteRepository extends JpaRepository<UserInviteEntity, St
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT i FROM UserInviteEntity i WHERE i.secretKey = :secretKey")
     Optional<UserInviteEntity> findBySecretKeyLocked(@Param("secretKey") String secretKey);
+
+	boolean existsByUsername(String username);
 }

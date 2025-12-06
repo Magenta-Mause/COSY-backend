@@ -65,4 +65,8 @@ public class UserEntityService {
                 .uuid(user.getUuid())
                 .build();
     }
+
+	public boolean existsByUsername(String username) {
+		return userEntityRepository.existsByUsername(username);
+	}
 }
