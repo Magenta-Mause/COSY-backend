@@ -17,9 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @RequiredArgsConstructor
 public class UserInviteService {
-    private final char[] POSSIBLE_CHARACTERS =
+    private static final char[] POSSIBLE_CHARACTERS =
             "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
-    private final int KEY_LENGTH = 16;
+    private static final int KEY_LENGTH = 16;
     private final UserInviteRepository userInviteRepository;
     private final UserEntityService userEntityService;
     private final PasswordEncoder passwordEncoder;
