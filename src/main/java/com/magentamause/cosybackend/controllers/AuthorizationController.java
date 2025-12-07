@@ -58,6 +58,7 @@ public class AuthorizationController {
                         .secure(false)
                         .path(basePath + "/auth/token")
                         .maxAge(0)
+                        .sameSite("Strict")
                         .build();
 
         return ResponseEntity.noContent()
