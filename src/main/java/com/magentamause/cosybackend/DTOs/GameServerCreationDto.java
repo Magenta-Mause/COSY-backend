@@ -6,6 +6,8 @@ import com.magentamause.cosybackend.entities.utility.EnvironmentVariableConfigur
 import com.magentamause.cosybackend.entities.utility.VolumeMountConfiguration;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -16,7 +18,7 @@ public class GameServerCreationDto {
     @NotBlank private String template;
     @NotBlank private String dockerImageName;
     @NotBlank private String dockerImageTag;
-    private Number port;
+    @NotNull private Number port;
     @NotBlank private String executionCommand;
     private List<EnvironmentVariableConfiguration> environmentVariables;
     private List<VolumeMountConfiguration> volumeMounts;
