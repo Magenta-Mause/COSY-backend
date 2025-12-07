@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magentamause.cosybackend.entities.utility.EnvironmentVariableConfiguration;
 import com.magentamause.cosybackend.entities.utility.VolumeMountConfiguration;
 import jakarta.validation.constraints.NotBlank;
-import java.util.List;
-
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Data;
 
 @Data
