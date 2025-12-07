@@ -42,6 +42,7 @@ public class GameServerConfigurationController {
                 .ownerId("test-user-id") // change this
                 .gameUuid(gameServerCreationDto.getGameUuid())
                 .serverName(gameServerCreationDto.getServerName())
+                .template(gameServerCreationDto.getTemplate())
                 .dockerImageName(gameServerCreationDto.getDockerImageName())
                 .dockerImageTag(gameServerCreationDto.getDockerImageTag())
                 .dockerExecutionCommand(

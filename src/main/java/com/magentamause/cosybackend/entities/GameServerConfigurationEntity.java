@@ -39,6 +39,8 @@ public class GameServerConfigurationEntity {
 
     private String dockerImageTag;
 
+    private String template;
+
     @ElementCollection
     @CollectionTable(
             name = "docker_execution_command",
