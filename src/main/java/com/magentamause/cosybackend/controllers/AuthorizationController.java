@@ -25,6 +25,7 @@ public class AuthorizationController {
 	@Value("${server.servlet.context-path}")
 	private String basePath;
 
+
 	@PostMapping("/login")
 	public ResponseEntity<Void> login(@Valid @RequestBody LoginDto loginDto) {
 		String refreshToken =
