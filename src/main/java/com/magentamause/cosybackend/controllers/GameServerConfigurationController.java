@@ -7,7 +7,6 @@ import com.magentamause.cosybackend.services.GameServerConfigurationService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Objects;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,7 +40,10 @@ public class GameServerConfigurationController {
     public ResponseEntity<GameServerConfigurationEntity> createGameServer(
             @Valid @RequestBody GameServerCreationDto gameServerCreationDto) {
         String userId =
-                (String) Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getPrincipal();
+                (String)
+                        Objects.requireNonNull(
+                                        SecurityContextHolder.getContext().getAuthentication())
+                                .getPrincipal();
 
         GameServerConfigurationEntity createdGameServer =
                 GameServerConfigurationEntity.builder()
