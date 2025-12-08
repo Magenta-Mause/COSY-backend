@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magentamause.cosybackend.entities.utility.EnvironmentVariableConfiguration;
 import com.magentamause.cosybackend.entities.utility.PortMapping;
 import com.magentamause.cosybackend.entities.utility.VolumeMountConfiguration;
+import com.magentamause.cosybackend.validation.UniqueElementsBy;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -18,8 +19,13 @@ public class GameServerCreationDto {
     @NotBlank private String template;
     @NotBlank private String dockerImageName;
     @NotBlank private String dockerImageTag;
+
+    @UniqueElementsBy(fieldNames = {"instancePort", "containerPort"}, message = "duplicate port mapping")
     @NotNull private List<PortMapping> portMappings;
     @NotBlank private String executionCommand;
+
+    @UniqueElementsBy(fieldNames = {"key", "value"}, message = "duplicate environment variable")
     private List<EnvironmentVariableConfiguration> environmentVariables;
+    @UniqueElementsBy(fieldNames = {"hostPath", "containerPath"}, message = "duplicate volume mounts")
     private List<VolumeMountConfiguration> volumeMounts;
 }

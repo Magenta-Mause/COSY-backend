@@ -60,10 +60,8 @@ public class GameServerConfigurationEntity {
             joinColumns = @JoinColumn(name = "game_server_configuration_uuid"))
     private List<EnvironmentVariableConfiguration> environmentVariables;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "volume_mounts",
-            joinColumns = @JoinColumn(name = "volume_mounts_configuration_uuid"))
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "game_server_configuration_uuid")
     private List<VolumeMountConfiguration> volumeMounts;
 
     public enum GameServerStatus {
