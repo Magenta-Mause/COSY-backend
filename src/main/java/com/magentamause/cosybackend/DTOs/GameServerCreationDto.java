@@ -3,6 +3,7 @@ package com.magentamause.cosybackend.DTOs;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magentamause.cosybackend.entities.utility.EnvironmentVariableConfiguration;
+import com.magentamause.cosybackend.entities.utility.PortMapping;
 import com.magentamause.cosybackend.entities.utility.VolumeMountConfiguration;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class GameServerCreationDto {
     @NotBlank private String template;
     @NotBlank private String dockerImageName;
     @NotBlank private String dockerImageTag;
-    @NotNull private Number port;
+    @NotNull private List<PortMapping> portMappings;
     @NotBlank private String executionCommand;
     private List<EnvironmentVariableConfiguration> environmentVariables;
     private List<VolumeMountConfiguration> volumeMounts;

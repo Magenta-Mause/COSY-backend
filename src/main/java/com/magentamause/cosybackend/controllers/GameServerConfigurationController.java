@@ -51,12 +51,18 @@ public class GameServerConfigurationController {
                         .environmentVariables(gameServerCreationDto.getEnvironmentVariables())
                         .volumeMounts(gameServerCreationDto.getVolumeMounts())
                         .portMappings(
-                                List.of(
-                                        PortMapping.builder()
-                                                .instancePort((int) gameServerCreationDto.getPort())
-                                                .containerPort(
-                                                        (int) gameServerCreationDto.getPort())
-                                                .build()))
+                                gameServerCreationDto.getPortMappings().stream()
+                                        .map(
+                                                portMapping ->
+                                                        PortMapping.builder()
+                                                                .instancePort(
+                                                                        portMapping
+                                                                                .getInstancePort())
+                                                                .containerPort(
+                                                                        portMapping
+                                                                                .getContainerPort())
+                                                                .build())
+                                        .toList())
                         .build();
 
         gameServerConfigurationService.saveGameServer(createdGameServer);
