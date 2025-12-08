@@ -53,8 +53,7 @@ public class GameServerConfigurationController {
                         .template(gameServerCreationDto.getTemplate())
                         .dockerImageName(gameServerCreationDto.getDockerImageName())
                         .dockerImageTag(gameServerCreationDto.getDockerImageTag())
-                        .dockerExecutionCommand(
-                                List.of(gameServerCreationDto.getExecutionCommand().split(" ")))
+                        .dockerExecutionCommand(gameServerCreationDto.getExecutionCommand())
                         .environmentVariables(gameServerCreationDto.getEnvironmentVariables())
                         .volumeMounts(gameServerCreationDto.getVolumeMounts())
                         .portMappings(
