@@ -20,12 +20,21 @@ public class GameServerCreationDto {
     @NotBlank private String dockerImageName;
     @NotBlank private String dockerImageTag;
 
-    @UniqueElementsBy(fieldNames = {"instancePort", "containerPort"}, message = "duplicate port mapping")
-    @NotNull private List<PortMapping> portMappings;
+    @UniqueElementsBy(
+            fieldNames = {"instancePort", "containerPort"},
+            message = "duplicate port mapping")
+    @NotNull
+    private List<PortMapping> portMappings;
+
     @NotBlank private String executionCommand;
 
-    @UniqueElementsBy(fieldNames = {"key", "value"}, message = "duplicate environment variable")
+    @UniqueElementsBy(
+            fieldNames = {"key", "value"},
+            message = "duplicate environment variable")
     private List<EnvironmentVariableConfiguration> environmentVariables;
-    @UniqueElementsBy(fieldNames = {"hostPath", "containerPath"}, message = "duplicate volume mounts")
+
+    @UniqueElementsBy(
+            fieldNames = {"hostPath", "containerPath"},
+            message = "duplicate volume mounts")
     private List<VolumeMountConfiguration> volumeMounts;
 }

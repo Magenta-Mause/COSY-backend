@@ -6,7 +6,8 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UniqueElementsByValidator implements ConstraintValidator<UniqueElementsBy, Collection<?>> {
+public class UniqueElementsByValidator
+        implements ConstraintValidator<UniqueElementsBy, Collection<?>> {
     private String[] fieldNames;
 
     @Override
@@ -22,18 +23,20 @@ public class UniqueElementsByValidator implements ConstraintValidator<UniqueElem
             if (element == null) continue;
             String key;
             try {
-                key = Arrays.stream(fieldNames)
-                        .map(fn -> {
-                            try {
-                                Field f = element.getClass().getDeclaredField(fn);
-                                f.setAccessible(true);
-                                Object v = f.get(element);
-                                return String.valueOf(v);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        })
-                        .collect(Collectors.joining("::"));
+                key =
+                        Arrays.stream(fieldNames)
+                                .map(
+                                        fn -> {
+                                            try {
+                                                Field f = element.getClass().getDeclaredField(fn);
+                                                f.setAccessible(true);
+                                                Object v = f.get(element);
+                                                return String.valueOf(v);
+                                            } catch (Exception e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        })
+                                .collect(Collectors.joining("::"));
             } catch (RuntimeException ex) {
                 return false; // invalid configuration -> fail validation
             }
