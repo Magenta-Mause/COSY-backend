@@ -2,7 +2,6 @@ package com.magentamause.cosybackend.controllers;
 
 import com.magentamause.cosybackend.DTOs.GameServerCreationDto;
 import com.magentamause.cosybackend.entities.GameServerConfigurationEntity;
-import com.magentamause.cosybackend.entities.utility.PortMapping;
 import com.magentamause.cosybackend.services.GameServerConfigurationService;
 import jakarta.validation.Valid;
 import java.util.List;
