@@ -5,8 +5,10 @@ import com.magentamause.cosybackend.security.jwtfilter.JwtTokenBody;
 import com.magentamause.cosybackend.security.jwtfilter.JwtUtils;
 import io.jsonwebtoken.Claims;
 import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -58,5 +60,11 @@ public class AuthorizationService {
         return Map.of(
                 "username", user.getUsername(),
                 "role", user.getRole());
+    }
+
+    public String getCurrentUserId() {
+        return (String)
+                Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication())
+                        .getPrincipal();
     }
 }
