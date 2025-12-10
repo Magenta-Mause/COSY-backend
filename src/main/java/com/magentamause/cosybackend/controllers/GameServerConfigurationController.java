@@ -1,6 +1,6 @@
 package com.magentamause.cosybackend.controllers;
 
-import com.magentamause.cosybackend.DTOs.GameServerCreationDto;
+import com.magentamause.cosybackend.DTOs.actiondtos.GameServerCreationDto;
 import com.magentamause.cosybackend.entities.GameServerConfigurationEntity;
 import com.magentamause.cosybackend.services.AuthorizationService;
 import com.magentamause.cosybackend.services.GameServerConfigurationService;
