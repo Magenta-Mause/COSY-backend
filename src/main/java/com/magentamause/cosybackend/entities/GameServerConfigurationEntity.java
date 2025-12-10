@@ -1,5 +1,7 @@
 package com.magentamause.cosybackend.entities;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magentamause.cosybackend.entities.utility.EnvironmentVariableConfiguration;
 import com.magentamause.cosybackend.entities.utility.PortMapping;
 import com.magentamause.cosybackend.entities.utility.VolumeMountConfiguration;
@@ -7,8 +9,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.*;
-import tools.jackson.databind.PropertyNamingStrategies;
-import tools.jackson.databind.annotation.JsonNaming;
 
 @Getter
 @Setter
