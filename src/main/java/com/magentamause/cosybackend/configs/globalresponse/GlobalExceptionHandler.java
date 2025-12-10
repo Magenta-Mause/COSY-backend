@@ -1,5 +1,6 @@
 package com.magentamause.cosybackend.configs.globalresponse;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -89,7 +90,8 @@ public class GlobalExceptionHandler {
                 ex.getBindingResult().getFieldErrors().stream()
                         .collect(
                                 Collectors.toMap(
-                                        FieldError::getField,
+                                        fieldError -> PropertyNamingStrategies.SnakeCaseStrategy.INSTANCE.translate(
+                                                fieldError.getField()),
                                         fieldError -> {
                                             String defaultMessage = fieldError.getDefaultMessage();
                                             return defaultMessage != null
