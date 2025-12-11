@@ -1,4 +1,4 @@
-package com.magentamause.cosybackend.DTOs.entitydtos;
+package com.magentamause.cosybackend.dtos.entitydtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

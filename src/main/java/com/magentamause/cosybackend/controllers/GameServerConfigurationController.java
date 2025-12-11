@@ -1,7 +1,7 @@
 package com.magentamause.cosybackend.controllers;
 
-import com.magentamause.cosybackend.DTOs.actiondtos.GameServerCreationDto;
-import com.magentamause.cosybackend.DTOs.entitydtos.GameServerDto;
+import com.magentamause.cosybackend.dtos.actiondtos.GameServerCreationDto;
+import com.magentamause.cosybackend.dtos.entitydtos.GameServerDto;
 import com.magentamause.cosybackend.entities.GameServerConfigurationEntity;
 import com.magentamause.cosybackend.entities.UserEntity;
 import com.magentamause.cosybackend.entities.utility.VolumeMountConfiguration;

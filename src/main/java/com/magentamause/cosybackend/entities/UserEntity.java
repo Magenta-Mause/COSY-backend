@@ -1,6 +1,6 @@
 package com.magentamause.cosybackend.entities;
 
-import com.magentamause.cosybackend.DTOs.entitydtos.UserEntityDto;
+import com.magentamause.cosybackend.dtos.entitydtos.UserEntityDto;
 import jakarta.persistence.*;
 import java.util.List;
 import lombok.*;
