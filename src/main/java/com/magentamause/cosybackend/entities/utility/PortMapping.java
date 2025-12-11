@@ -24,4 +24,11 @@ public class PortMapping {
     @Min(1)
     @Max(65535)
     private int containerPort;
+
+    @NonNull private PortProtocol protocol;
+
+    public enum PortProtocol {
+        TCP,
+        UDP
+    }
 }

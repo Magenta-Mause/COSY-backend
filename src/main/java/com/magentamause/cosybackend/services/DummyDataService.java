@@ -68,6 +68,7 @@ public class DummyDataService {
                                                 PortMapping.builder()
                                                         .instancePort(25565)
                                                         .containerPort(25565)
+                                                        .protocol(PortMapping.PortProtocol.TCP)
                                                         .build()))
                                 .environmentVariables(
                                         List.of(
@@ -95,10 +96,12 @@ public class DummyDataService {
                                                 PortMapping.builder()
                                                         .instancePort(2456)
                                                         .containerPort(2456)
+                                                        .protocol(PortMapping.PortProtocol.TCP)
                                                         .build(),
                                                 PortMapping.builder()
                                                         .instancePort(2457)
                                                         .containerPort(2457)
+                                                        .protocol(PortMapping.PortProtocol.TCP)
                                                         .build()))
                                 .environmentVariables(
                                         List.of(
@@ -127,6 +130,7 @@ public class DummyDataService {
                                                 PortMapping.builder()
                                                         .instancePort(27015)
                                                         .containerPort(27015)
+                                                        .protocol(PortMapping.PortProtocol.TCP)
                                                         .build()))
                                 .environmentVariables(
                                         List.of(
