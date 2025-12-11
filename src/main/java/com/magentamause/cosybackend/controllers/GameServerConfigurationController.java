@@ -59,9 +59,11 @@ public class GameServerConfigurationController {
                         .dockerExecutionCommand(gameServerCreationDto.getExecutionCommand())
                         .environmentVariables(gameServerCreationDto.getEnvironmentVariables())
                         .volumeMounts(
-                                gameServerCreationDto.getVolumeMounts().stream()
-                                        .map(VolumeMountConfiguration::fromDto)
-                                        .toList())
+                                gameServerCreationDto.getVolumeMounts() != null
+                                        ? gameServerCreationDto.getVolumeMounts().stream()
+                                                .map(VolumeMountConfiguration::fromDto)
+                                                .toList()
+                                        : null)
                         .portMappings(gameServerCreationDto.getPortMappings())
                         .build();
 

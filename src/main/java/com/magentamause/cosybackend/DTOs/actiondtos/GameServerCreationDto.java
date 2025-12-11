@@ -34,16 +34,12 @@ public class GameServerCreationDto {
     @UniqueElementsBy(
             fieldNames = {"key", "value"},
             message = "duplicate environment variable")
-    @NotNull
-    @NotEmpty
     @Valid
     private List<EnvironmentVariableConfiguration> environmentVariables;
 
     @UniqueElementsBy(
             fieldNames = {"hostPath", "containerPath"},
             message = "duplicate volume mounts")
-    @NotNull
-    @NotEmpty
     @Valid
     private List<VolumeMountConfigurationCreationDto> volumeMounts;
 }
