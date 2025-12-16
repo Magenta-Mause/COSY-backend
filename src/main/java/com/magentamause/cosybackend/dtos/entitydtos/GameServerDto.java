@@ -42,7 +42,7 @@ public class GameServerDto {
 
     @NotNull @Valid private List<PortMapping> portMappings;
 
-    @NotNull @NotEmpty @Valid private List<EnvironmentVariableConfiguration> environmentVariables;
+    @NotNull @Valid private List<EnvironmentVariableConfiguration> environmentVariables;
 
-    @NotNull @NotEmpty @Valid private List<VolumeMountConfiguration> volumeMounts;
+    @NotNull @Valid private List<VolumeMountConfiguration> volumeMounts;
 }
