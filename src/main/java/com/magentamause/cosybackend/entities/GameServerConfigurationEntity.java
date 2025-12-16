@@ -83,7 +83,7 @@ public class GameServerConfigurationEntity {
                 .dockerImageName(this.getDockerImageName())
                 .dockerImageTag(this.getDockerImageTag())
                 .template(this.getTemplate())
-                .dockerExecutionCommand(this.getDockerExecutionCommand())
+                .executionCommand(this.getDockerExecutionCommand())
                 .portMappings(this.getPortMappings())
                 .environmentVariables(this.getEnvironmentVariables())
                 .volumeMounts(this.getVolumeMounts())

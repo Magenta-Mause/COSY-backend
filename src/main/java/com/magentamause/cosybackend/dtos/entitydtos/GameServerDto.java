@@ -38,7 +38,7 @@ public class GameServerDto {
 
     private String template;
 
-    @NotNull @NotEmpty private List<String> dockerExecutionCommand;
+    private List<String> executionCommand;
 
     @NotNull @NotEmpty @Valid private List<PortMapping> portMappings;
 
