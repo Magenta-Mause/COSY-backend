@@ -40,7 +40,7 @@ public class GameServerDto {
 
     private List<String> executionCommand;
 
-    @NotNull @NotEmpty @Valid private List<PortMapping> portMappings;
+    @NotNull @Valid private List<PortMapping> portMappings;
 
     @NotNull @NotEmpty @Valid private List<EnvironmentVariableConfiguration> environmentVariables;
 
