@@ -1,8 +1,6 @@
 name: Lint, Format and Test
 
 on:
-  push:
-    branches: [ "*" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -30,3 +28,4 @@ jobs:
 
       - name: Build and Verify
         run: mvn -B verify
+
