@@ -8,6 +8,8 @@ on:
 
 jobs:
   lint:
+    permissions:
+      contents: read
     uses: ./.github/workflows/lint.yml
 
   build-and-push-image:
