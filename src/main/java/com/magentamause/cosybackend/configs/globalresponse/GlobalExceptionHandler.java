@@ -2,8 +2,6 @@ package com.magentamause.cosybackend.configs.globalresponse;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +14,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,7 +24,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ApiResponse<?>> handleResponseStatusException(
             ResponseStatusException ex, HttpServletRequest request) {
-        log.warn("Response status exception occurred", ex);
+        log.debug("Response status exception occurred {}", ex);
         return ResponseEntity.status(ex.getStatusCode())
                 .body(
                         ApiResponse.builder()
@@ -37,7 +38,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ApiResponse<?>> handleResourceNotFound(NoResourceFoundException ex) {
-        log.warn("Resource not found: \"{}\"", ex.getResourcePath());
+        log.debug("Resource not found: {}", ex.getResourcePath());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(
                         ApiResponse.builder()
@@ -129,7 +130,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<?>> handle(Exception ex, HttpServletRequest request)
             throws Exception {
         String path = request.getRequestURI();
-        log.warn("Unexpected error occurred", ex);
+        log.debug("Unexpected error occurred", ex);
 
         if (path.startsWith("/api/v3/api-docs") || path.startsWith("/api/swagger-ui")) {
             throw ex;

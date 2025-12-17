@@ -2,8 +2,9 @@ package com.magentamause.cosybackend.entities;
 
 import com.magentamause.cosybackend.dtos.entitydtos.UserEntityDto;
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,6 +39,7 @@ public class UserEntity {
 
     public enum Role {
         OWNER,
+        ADMIN,
         QUOTA_USER
     }
 
