@@ -1,11 +1,9 @@
 package com.magentamause.cosybackend.services;
 
+import com.magentamause.cosybackend.dtos.actiondtos.UserInviteCreationDto;
 import com.magentamause.cosybackend.entities.UserEntity;
 import com.magentamause.cosybackend.entities.UserInviteEntity;
 import com.magentamause.cosybackend.repositories.UserInviteRepository;
-import java.security.SecureRandom;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,6 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -30,18 +32,17 @@ public class UserInviteService {
     }
 
     public void revokeInvite(String inviteUuid) {
-        // Check existence first to provide clear feedback
-        getInviteByUuid(inviteUuid); // throws 404 if not found
+        getInviteByUuid(inviteUuid);
         userInviteRepository.deleteById(inviteUuid);
     }
 
-    public UserInviteEntity createInvite(String ownerCreationId, String username) {
-        if (!Objects.isNull(username)) {
-            if (userInviteRepository.existsByUsername(username)) {
+    public UserInviteEntity createInvite(String ownerCreationId, UserInviteCreationDto userInviteCreationDto) {
+        if (!Objects.isNull(userInviteCreationDto.getUsername())) {
+            if (userInviteRepository.existsByUsername(userInviteCreationDto.getUsername())) {
                 throw new ResponseStatusException(
                         HttpStatus.CONFLICT, "Invite with the given username already exists");
             }
-            if (userEntityService.existsByUsername(username)) {
+            if (userEntityService.existsByUsername(userInviteCreationDto.getUsername())) {
                 throw new ResponseStatusException(
                         HttpStatus.CONFLICT, "A user with the given username already exists");
             }
@@ -51,7 +52,7 @@ public class UserInviteService {
                 UserInviteEntity.builder()
                         .invitedBy(userEntityService.getUserByUuid(ownerCreationId))
                         .secretKey(generateRandomKey())
-                        .username(username)
+                        .username(userInviteCreationDto.getUsername())
                         .build();
 
         return userInviteRepository.save(invite);
@@ -84,9 +85,15 @@ public class UserInviteService {
                                 () ->
                                         new ResponseStatusException(
                                                 HttpStatus.NOT_FOUND, "Invite not found"));
+        UserEntity.Role inviteRole = switch (invite.getRole()) {
+            case null -> UserEntity.Role.QUOTA_USER;
+            case QUOTA_USER -> UserEntity.Role.QUOTA_USER;
+            case ADMIN, OWNER -> UserEntity.Role.ADMIN;
+        };
+
         UserEntity.UserEntityBuilder userBuilder =
                 UserEntity.builder()
-                        .role(UserEntity.Role.QUOTA_USER)
+                        .role(inviteRole)
                         .password(passwordEncoder.encode(password))
                         .defaultPasswordReset(true);
         if (Objects.isNull(invite.getUsername())) {
