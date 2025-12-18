@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,18 +27,7 @@ public class FileStorageService {
     public List<FileInfo> listFiles(Path rootPath, String relativePath) throws IOException {
         Path path = resolveAndValidatePath(rootPath, relativePath);
         try (Stream<Path> stream = Files.list(path)) {
-            return stream.map(
-                            p -> {
-                                try {
-                                    return new FileInfo(
-                                            p.getFileName().toString(),
-                                            Files.isDirectory(p),
-                                            Files.size(p));
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            })
-                    .toList();
+            return stream.map(this::toFileInfo).toList();
         }
     }
 
@@ -107,4 +97,11 @@ public class FileStorageService {
         }
         return resolved;
     }
+
+    @SneakyThrows
+    private FileInfo toFileInfo(Path p) {
+        return new FileInfo(
+                p.getFileName().toString(), Files.isDirectory(p), Files.size(p));
+    }
 }
+
