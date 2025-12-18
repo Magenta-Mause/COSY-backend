@@ -4,12 +4,11 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magentamause.cosybackend.annotations.ValidUsername;
 import com.magentamause.cosybackend.entities.UserEntity;
-import jakarta.validation.Valid;
 import lombok.Data;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserInviteCreationDto {
     @ValidUsername private String username;
-    @Valid private UserEntity.Role role;
+    private UserEntity.Role role;
 }

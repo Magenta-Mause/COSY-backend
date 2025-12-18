@@ -21,7 +21,10 @@ public class UserPolicy implements AccessPolicy {
     @Override
     public boolean can(UserEntity user, Action action, Object referenceId) {
         if (user.getRole().equals(UserEntity.Role.ADMIN) && action.equals(Action.DELETE)) {
-            UserEntity userEntity = userEntityService.getUserByUuid(user.getUuid());
+            if (!(referenceId instanceof String)) {
+                return false;
+            }
+            UserEntity userEntity = userEntityService.getUserByUuid((String) referenceId);
             if (userEntity.getRole().equals(UserEntity.Role.OWNER)) {
                 return false;
             }

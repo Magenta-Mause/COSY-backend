@@ -106,11 +106,12 @@ public class UserInviteService {
             userBuilder.username(invite.getUsername());
         }
 
-        if (userEntityService.existsByUsername(userBuilder.build().getUsername())) {
+        UserEntity builtUser = userBuilder.build();
+        if (userEntityService.existsByUsername(builtUser.getUsername())) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT, "A user with the given username already exists");
         }
-        UserEntity user = userEntityService.saveUserEntity(userBuilder.build());
+        UserEntity user = userEntityService.saveUserEntity(builtUser);
         userInviteRepository.delete(invite);
         log.info("Invite [{}] used for user {}", invite.getUuid(), user.getUsername());
         return user;

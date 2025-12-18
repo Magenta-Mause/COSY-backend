@@ -32,7 +32,6 @@ public class UserInviteController {
     @GetMapping
     @RequireAccess(action = Action.READ, resource = Resource.USER_INVITE)
     public ResponseEntity<List<UserInviteDto>> getAllUserInvites() {
-        securityContextService.assertUserHasAccessOfRole(UserEntity.Role.OWNER);
         return ResponseEntity.ok(
                 userInviteService.getAllInvites().stream()
                         .map(UserInviteEntity::convertToDto)
@@ -49,7 +48,6 @@ public class UserInviteController {
     @RequireAccess(action = Action.CREATE, resource = Resource.USER_INVITE)
     public ResponseEntity<UserInviteDto> createInvite(
             @Valid @RequestBody UserInviteCreationDto userInviteCreationDto) {
-        securityContextService.assertUserHasAccessOfRole(UserEntity.Role.OWNER);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(
                         userInviteService
