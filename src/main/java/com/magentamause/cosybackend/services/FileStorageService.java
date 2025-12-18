@@ -73,6 +73,25 @@ public class FileStorageService {
         }
     }
 
+    /**
+     * Resolves and validates a relative path against a root path, preventing path traversal
+     * attacks.
+     *
+     * <p>This method performs critical security validation to ensure that the resolved path stays
+     * within the allowed root directory. It normalizes the path and checks that the resolved path
+     * starts with the root path, preventing malicious attempts to access files outside the intended
+     * scope using sequences like "../" or similar path traversal techniques.
+     *
+     * @param rootPath the root directory path that serves as the security boundary; all resolved
+     *     paths must be within this directory
+     * @param relativePath the relative path to resolve against the root path; leading slashes are
+     *     automatically removed to ensure proper relative resolution; null is treated as empty
+     *     string
+     * @return the resolved and validated absolute path that is guaranteed to be within the root
+     *     path
+     * @throws SecurityException if the resolved path is outside the allowed root path scope,
+     *     indicating a potential path traversal attack attempt
+     */
     Path resolveAndValidatePath(Path rootPath, String relativePath) {
         if (relativePath == null) {
             relativePath = "";
