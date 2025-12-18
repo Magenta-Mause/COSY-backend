@@ -3,8 +3,10 @@ package com.magentamause.cosybackend.dtos.entitydtos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import java.time.Instant;
+import com.magentamause.cosybackend.entities.UserEntity;
 import lombok.*;
+
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -20,4 +22,5 @@ public class UserInviteDto {
     private String inviteByUsername;
     private String secretKey;
     private Instant createdAt;
+    private UserEntity.Role role;
 }

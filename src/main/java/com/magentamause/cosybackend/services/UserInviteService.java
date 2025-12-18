@@ -53,6 +53,7 @@ public class UserInviteService {
                         .invitedBy(userEntityService.getUserByUuid(ownerCreationId))
                         .secretKey(generateRandomKey())
                         .username(userInviteCreationDto.getUsername())
+                        .role(userInviteCreationDto.getRole())
                         .build();
 
         return userInviteRepository.save(invite);
@@ -85,6 +86,7 @@ public class UserInviteService {
                                 () ->
                                         new ResponseStatusException(
                                                 HttpStatus.NOT_FOUND, "Invite not found"));
+
         UserEntity.Role inviteRole = switch (invite.getRole()) {
             case null -> UserEntity.Role.QUOTA_USER;
             case QUOTA_USER -> UserEntity.Role.QUOTA_USER;
@@ -96,13 +98,18 @@ public class UserInviteService {
                         .role(inviteRole)
                         .password(passwordEncoder.encode(password))
                         .defaultPasswordReset(true);
+
         if (Objects.isNull(invite.getUsername())) {
             userBuilder.username(username);
         } else {
             userBuilder.username(invite.getUsername());
         }
+
+        if (userEntityService.existsByUsername(userBuilder.build().getUsername())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "A user with the given username already exists");
+        }
         UserEntity user = userEntityService.saveUserEntity(userBuilder.build());
-        userInviteRepository.delete(invite); // Delete the invite after use
+        userInviteRepository.delete(invite);
         log.info("Invite [{}] used for user {}", invite.getUuid(), user.getUsername());
         return user;
     }

@@ -25,7 +25,6 @@ public class GameServerPolicy implements AccessPolicy {
 
     @Override
     public boolean can(UserEntity user, Action action, Object referenceId) {
-        log.info("UserRole: {}; Action: {}; ReferenceId: {}", user.getRole(), action, referenceId);
         if (user.getRole().equals(UserEntity.Role.OWNER) || user.getRole().equals(UserEntity.Role.ADMIN)) {
             return true;
         }
@@ -35,7 +34,7 @@ public class GameServerPolicy implements AccessPolicy {
         }
 
         if (!(referenceId instanceof String)) {
-            return false;
+            return action == Action.READ;
         }
 
         GameServerConfigurationEntity gameServerConfigurationEntity = gameServerConfigurationService.getGameServerById((String) referenceId);

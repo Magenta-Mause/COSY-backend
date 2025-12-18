@@ -48,6 +48,7 @@ public class UserInviteEntity {
                 .secretKey(this.getSecretKey())
                 .createdAt(this.getCreatedAt())
                 .inviteByUsername(this.getInvitedBy().getUsername())
+                .role(this.getRole())
                 .build();
     }
 }

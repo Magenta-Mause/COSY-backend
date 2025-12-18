@@ -130,7 +130,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<?>> handle(Exception ex, HttpServletRequest request)
             throws Exception {
         String path = request.getRequestURI();
-        log.debug("Unexpected error occurred", ex);
+        log.warn("Unexpected error occurred", ex);
 
         if (path.startsWith("/api/v3/api-docs") || path.startsWith("/api/swagger-ui")) {
             throw ex;

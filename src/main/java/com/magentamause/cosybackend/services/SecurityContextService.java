@@ -64,6 +64,7 @@ public class SecurityContextService {
             throw new IllegalStateException("No policy for resource " + resource);
         }
 
+        log.debug("Checking if user {} can {} {}", getUser().getUsername(), action, referenceId);
         boolean allowed = policy.can(getUser(), action, referenceId);
         if (!allowed) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Insufficient permissions");
