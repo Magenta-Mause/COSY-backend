@@ -16,14 +16,18 @@ public class FileStorageService {
     public List<FileInfo> listFiles(Path rootPath, String relativePath) throws IOException {
         Path path = resolveAndValidatePath(rootPath, relativePath);
         try (Stream<Path> stream = Files.list(path)) {
-            return stream.map(p -> {
-                try {
-                    return new FileInfo(
-                            p.getFileName().toString(), Files.isDirectory(p), Files.size(p));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).toList();
+            return stream.map(
+                            p -> {
+                                try {
+                                    return new FileInfo(
+                                            p.getFileName().toString(),
+                                            Files.isDirectory(p),
+                                            Files.size(p));
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            })
+                    .toList();
         }
     }
 
@@ -50,13 +54,14 @@ public class FileStorageService {
         if (Files.isDirectory(path)) {
             try (Stream<Path> walk = Files.walk(path)) {
                 walk.sorted(Comparator.reverseOrder())
-                        .forEach(p -> {
-                            try {
-                                Files.delete(p);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
+                        .forEach(
+                                p -> {
+                                    try {
+                                        Files.delete(p);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
             }
         } else {
             Files.deleteIfExists(path);
@@ -71,7 +76,7 @@ public class FileStorageService {
         if (relativePath.startsWith("/")) {
             relativePath = relativePath.substring(1);
         }
-        
+
         Path resolved = rootPath.resolve(relativePath).normalize();
         if (!resolved.startsWith(rootPath.normalize())) {
             throw new SecurityException("Access denied: Path is outside the allowed scope.");
@@ -79,4 +84,3 @@ public class FileStorageService {
         return resolved;
     }
 }
-
