@@ -25,8 +25,7 @@ public class GameServerPolicy implements AccessPolicy {
 
     @Override
     public boolean can(UserEntity user, Action action, Object referenceId) {
-        if (user.getRole().equals(UserEntity.Role.OWNER)
-                || user.getRole().equals(UserEntity.Role.ADMIN)) {
+        if (user.getRole().isAdmin()) {
             return true;
         }
 
