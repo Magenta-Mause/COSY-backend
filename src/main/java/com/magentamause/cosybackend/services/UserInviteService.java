@@ -4,6 +4,9 @@ import com.magentamause.cosybackend.dtos.actiondtos.UserInviteCreationDto;
 import com.magentamause.cosybackend.entities.UserEntity;
 import com.magentamause.cosybackend.entities.UserInviteEntity;
 import com.magentamause.cosybackend.repositories.UserInviteRepository;
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,10 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.security.SecureRandom;
-import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -79,11 +78,12 @@ public class UserInviteService {
     }
 
     private UserInviteEntity getInviteBySecretKeyWithLockOrElseThrow(String username) {
-        return userInviteRepository.findBySecretKeyLocked(username).orElseThrow(
-                () ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, "Invite not found")
-        );
+        return userInviteRepository
+                .findBySecretKeyLocked(username)
+                .orElseThrow(
+                        () ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND, "Invite not found"));
     }
 
     @Transactional

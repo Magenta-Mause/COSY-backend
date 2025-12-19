@@ -41,7 +41,8 @@ public class UserInviteController {
     @GetMapping("/{secretKey}")
     public ResponseEntity<UserInviteDto> getUserInvite(
             @PathVariable("secretKey") String secretKey) {
-        return ResponseEntity.ok(userInviteService.getInviteBySecretKeyOrElseThrow(secretKey).convertToDto());
+        return ResponseEntity.ok(
+                userInviteService.getInviteBySecretKeyOrElseThrow(secretKey).convertToDto());
     }
 
     @PostMapping
