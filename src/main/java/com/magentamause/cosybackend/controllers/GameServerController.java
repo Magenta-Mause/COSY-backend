@@ -1,9 +1,17 @@
 package com.magentamause.cosybackend.controllers;
 
+import com.magentamause.cosybackend.dtos.entitydtos.StartEventDto;
 import com.magentamause.cosybackend.services.GameServerService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import java.time.Duration;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,9 +25,29 @@ public class GameServerController {
         return gameServerService.getStatus(serviceName);
     }
 
-    @PostMapping("/{serviceName}/start")
-    public List<Integer> startService(@PathVariable String serviceName) {
-        return gameServerService.startServer(serviceName);
+    @GetMapping(
+            value = "/{serviceName}/start",
+            produces = MediaType.TEXT_EVENT_STREAM_VALUE
+    )
+    public Flux<StartEventDto> startServiceSse(
+            @PathVariable String serviceName,
+            Authentication authentication
+    ) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return Flux.just(StartEventDto.error("Not authenticated"));
+        }
+
+        Flux<StartEventDto> heartbeat = Flux.interval(Duration.ofSeconds(2))
+                .map(tick -> StartEventDto.heartbeat());
+
+        Mono<StartEventDto> work = Mono.fromCallable(() -> gameServerService.startServer(serviceName))
+                .subscribeOn(Schedulers.boundedElastic())
+                .map(StartEventDto::done)
+                .onErrorResume(ex -> Mono.just(StartEventDto.error(ex.getMessage())));
+
+        return Flux.merge(heartbeat, work)
+                .takeUntil(event -> event.getType().equals(StartEventDto.Type.DONE)
+                        || event.getType().equals(StartEventDto.Type.ERROR));
     }
 
     @PostMapping("/{serviceName}/stop")
