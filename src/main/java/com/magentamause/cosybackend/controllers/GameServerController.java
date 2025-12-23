@@ -30,13 +30,8 @@ public class GameServerController {
             produces = MediaType.TEXT_EVENT_STREAM_VALUE
     )
     public Flux<StartEventDto> startServiceSse(
-            @PathVariable String serviceName,
-            Authentication authentication
+            @PathVariable String serviceName
     ) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return Flux.just(StartEventDto.error("Not authenticated"));
-        }
-
         Flux<StartEventDto> heartbeat = Flux.interval(Duration.ofSeconds(2))
                 .map(tick -> StartEventDto.heartbeat());
 
